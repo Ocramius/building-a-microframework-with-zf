@@ -78,3 +78,7 @@
     - it works just fine!
     - but is tied to the web SAPI
        - what is the web SAPI? (audience?)
+       - what's the problem?
+          - react/http support
+          - integration with firewall components
+          - etc.
