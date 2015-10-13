@@ -28,6 +28,8 @@
     - penny
     - lumen
     - react/http
+    - phly/http
+    - phly/conduit
     - zendframework/zend-expressive
 
 # let's make an example
