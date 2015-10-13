@@ -86,3 +86,7 @@
  - introducing PSR-7 middlewares
     - what is PSR-7? (ask the audience)
     - let's make our app forward-compatible!
+    - zend-stratigility
+ 
+ - introducing zend-expressive
+    - not the zend framework 3 that you were expecting, huh?
