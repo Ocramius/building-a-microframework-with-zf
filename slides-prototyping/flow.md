@@ -43,12 +43,15 @@
     - for simplicity, the game is serializable
     - we will store it in a fixed file location (again, simplicity)
  - Player (part of the table)
-    - for simplicity, cannot join nor leave
+    - for simplicity, cannot leave
     - for simplicity, has an initial fixed amount of chips
  - Player has actions, actions may fail or succeed
     - actions happen through the table:
-       - `Table#pass($player)`
-       - `Table#bet($player, $amount)`
+       - `Table#join($player)`
+          - gives us a `PlayerToken`
+       - `Table#pass($playerToken)`
+       - `Table#bet($playerToken, $amount)`
+          - only the owner of the token can execute these actions!
  - Table status is displayed (possible actions, round, winner)
     - `Table#showPossibleActions()`
        - returns a `PossibleActions` VO
