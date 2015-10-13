@@ -28,7 +28,7 @@
     - penny
     - lumen
     - react/http
-    - zendframework/stratigility+diactoros
+    - zendframework/zend-expressive
 
 # let's make an example
 
@@ -36,3 +36,4 @@
  - let's design a domain!
     - Poker!
     - (by the way, I don't know the rules of Poker)
+
