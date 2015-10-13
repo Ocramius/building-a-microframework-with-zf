@@ -66,3 +66,7 @@
        - security is part of the domain
           - in poker, you can't read somebody else's cards!
 
+# let's code our micr-oframework to solve this!
+
+ - `index.php`
+    - I am not even kidding!
