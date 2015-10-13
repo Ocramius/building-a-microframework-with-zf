@@ -102,3 +102,8 @@
     
  - congrats!
     - Now your app is compatible with any PSR-7 (stratigility-compatible) middleware
+    - can work with symfony 3
+    - can work with slim
+    - can work with zend-mvc v3
+    - can work WITHOUT the PHP web SAPI!
+    - can work without `ext/session`
