@@ -73,3 +73,8 @@
     - serializes/unserializes the table
     - allows interactions (given a player token, or a new player joining)
     - simple `switch` case + URI matching + HTTP method matching
+    
+ - that's it, that's our framework!
+    - it works just fine!
+    - but is tied to the web SAPI
+       - what is the web SAPI? (audience?)
