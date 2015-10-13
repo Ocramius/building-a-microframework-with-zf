@@ -66,7 +66,9 @@
        - security is part of the domain
           - in poker, you can't read somebody else's cards!
 
-# let's code our micr-oframework to solve this!
+# let's code our micro-framework to solve this!
 
  - `index.php`
     - I am not even kidding!
+    - serializes/unserializes the table
+    - allows interactions (given a player token, or a new player joining)
