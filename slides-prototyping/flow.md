@@ -96,3 +96,6 @@
        - "get-cards" route (shows cards, only with cookie)
        - "pass" route (action, only with cookie, redirects to "index")
        - "bet" route (action, only with cookie, redirects to "index")
+       
+ - let's replace session!
+    - `Ocramius/StorageLessSession`
