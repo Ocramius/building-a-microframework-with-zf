@@ -38,4 +38,26 @@
  - let's design a domain!
     - Poker!
     - (by the way, I don't know the rules of Poker)
-
+ - Poker game
+    - for simplicity, the game is serializable
+    - we will store it in a fixed file location (again, simplicity)
+ - Player (part of the table)
+    - for simplicity, cannot join nor leave
+    - for simplicity, has an initial fixed amount of chips
+ - Player has actions, actions may fail or succeed
+    - actions happen through the table:
+       - `Table#pass($player)`
+       - `Table#bet($player, $amount)`
+ - Table status is displayed (possible actions, round, winner)
+    - `Table#showPossibleActions()`
+       - returns a `PossibleActions` VO
+          - with players and what they can do
+          - only the current player has a possible action
+    - `Table#showAmounts()`
+       - returns a `Player` VO
+          - with players and their chips
+    - `Table#getPlayerCards($playerToken)`
+       - allows reading the cards of a player by his token
+       - No token = can't read cards
+       - security is part of the domain
+          - in poker, you can't read somebody else's cards!
