@@ -90,3 +90,9 @@
  
  - introducing zend-expressive
     - not the zend framework 3 that you were expecting, huh?
+    - let's code an example!
+       - "index" route (show status)
+       - "join" route (provides cookie, redirects to "index")
+       - "get-cards" route (shows cards, only with cookie)
+       - "pass" route (action, only with cookie, redirects to "index")
+       - "bet" route (action, only with cookie, redirects to "index")
