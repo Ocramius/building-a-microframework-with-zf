@@ -107,3 +107,8 @@
     - can work with zend-mvc v3
     - can work WITHOUT the PHP web SAPI!
     - can work without `ext/session`
+ 
+ - can deploy standalone
+ - can deploy as part of a framework
+ - can move it wherever we want
+    - we achieved what we wanted: minimal framework coupling!
