@@ -29,3 +29,10 @@
     - lumen
     - react/http
     - zendframework/stratigility+diactoros
+
+# let's make an example
+
+ - we're in Vegas
+ - let's design a domain!
+    - Poker!
+    - (by the way, I don't know the rules of Poker)
