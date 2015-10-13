@@ -72,3 +72,4 @@
     - I am not even kidding!
     - serializes/unserializes the table
     - allows interactions (given a player token, or a new player joining)
+    - simple `switch` case + URI matching + HTTP method matching
