@@ -82,3 +82,6 @@
           - react/http support
           - integration with firewall components
           - etc.
+          
+ - introducing PSR-7 middlewares
+    - what is PSR-7? (ask the audience)
