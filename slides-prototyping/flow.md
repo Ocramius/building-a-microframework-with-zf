@@ -99,3 +99,6 @@
        
  - let's replace session!
     - `Ocramius/StorageLessSession`
+    
+ - congrats!
+    - Now your app is compatible with any PSR-7 (stratigility-compatible) middleware
