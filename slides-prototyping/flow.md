@@ -20,4 +20,12 @@
  - prototyping around an existing domain
  - web pages? Nah, use static HTML for that.
  
- 
+# types of micro-framework?
+
+ - the following are all micro-frameworks:
+    - symfony/console is a micro-framework
+    - silex
+    - penny
+    - lumen
+    - react/http
+    - zendframework/stratigility+diactoros
