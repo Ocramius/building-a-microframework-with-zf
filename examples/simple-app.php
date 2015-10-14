@@ -16,11 +16,6 @@ use Ramsey\Uuid\Uuid;
         json_encode(['error' => 'something went wrong']);
     });
 
-    $game        = $_GET['game_id'] ?? null;
-    $playerToken = $_GET['player'] ?? null;
-    $action      = $_GET['action'] ?? null;
-    $amount      = $_GET['amount'] ?? null;
-
     /**
      * @return Game
      */
@@ -50,7 +45,7 @@ use Ramsey\Uuid\Uuid;
         case 'GET':
             return;
         case 'POST':
-            switch ($action) {
+            switch ($_GET['action'] ?? null) {
                 case 'create-game':
                     // @TODO hardcoded (for now)
                     list($game, $playerTokens) = Game::fromPlayers(
