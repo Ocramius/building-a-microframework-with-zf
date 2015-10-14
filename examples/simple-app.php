@@ -38,15 +38,7 @@ use Ramsey\Uuid\Uuid;
 
     switch (strtoupper($_SERVER['REQUEST_METHOD'])) {
         case 'GET':
-            switch ($action) {
-                case 'create-game':
-                    $gameId = Uuid::uuid4();
-
-                    // hardcoded
-                    $game = Game::fromPlayers();
-            }
-
-            break;
+            return;
         case 'POST':
             switch ($action) {
                 case 'create-game':
@@ -65,6 +57,6 @@ use Ramsey\Uuid\Uuid;
                 case 'post-blind':
             }
 
-            break;
+            return;
     }
 })();
