@@ -54,6 +54,16 @@ use Ramsey\Uuid\Uuid;
                     ]);
 
                     return;
+                case 'see-community-cards':
+                    /* @var $game Game */
+                    $game = $getGame();
+
+                    echo json_encode([
+                        // different serialization format needed.
+                        'community-cards' => $game->seeCommunityCards(),
+                    ]);
+
+                    return;
             }
             return;
         case 'POST':
