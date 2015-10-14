@@ -57,9 +57,14 @@ use Ramsey\Uuid\Uuid;
                         Player::fromCash(95)
                     );
 
-                    file_put_contents(__DIR__ . '/data/poker-games/' . (string) Uuid::uuid4(), serialize($game));
+                    $gameId = (string) Uuid::uuid4();
 
-                    echo json_encode(['player-tokens' => array_map('strval', $playerTokens)]);
+                    $saveGame($game, $gameId);
+
+                    echo json_encode([
+                        'game-id'       => $gameId,
+                        'player-tokens' => array_map('strval', $playerTokens)
+                    ]);
 
                 case 'post-blind':
             }
