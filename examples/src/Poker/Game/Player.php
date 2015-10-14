@@ -12,10 +12,12 @@ final class Player
     {
     }
 
-    public function fromCash(int $amount)
+    public static function fromCash(int $amount)
     {
         $instance = new self();
 
         $instance->initialCashAmount = $amount;
+
+        return $instance;
     }
 }
