@@ -32,6 +32,13 @@ use Ramsey\Uuid\Uuid;
         return unserialize(file_get_contents($filePath));
     };
 
+    $saveGame = function (Game $game, Uuid $gameId = null) {
+        file_put_contents(
+            __DIR__ . '/data/poker-games/' . (string) ($gameId ?? Uuid::fromString($_GET['game_id'] ?? '')),
+            serialize($game)
+        );
+    };
+
     $getToken = function () : PlayerToken {
         return PlayerToken::fromString($_GET['player_token'] ?? '');
     };
