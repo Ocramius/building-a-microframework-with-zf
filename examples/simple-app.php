@@ -4,6 +4,7 @@
 
 use Poker\Game\Player;
 use Poker\Game;
+use Poker\Game\PlayerToken;
 use Ramsey\Uuid\Uuid;
 
 (function () {
@@ -18,9 +19,21 @@ use Ramsey\Uuid\Uuid;
     $game        = $_GET['game_id'] ?? null;
     $playerToken = $_GET['player'] ?? null;
     $action      = $_GET['action'] ?? null;
+    $amount      = $_GET['amount'] ?? null;
     $httpMethod  = strtoupper($_SERVER['REQUEST_METHOD']);
 
-    $getGame = function ($gameId) {
+    $getGame = function () : Game {
+        $gameUuid = Uuid::fromString($_GET['game_id'] ?? '');
+        $filePath = __DIR__ . '/data/poker-games/' . (string) $gameUuid;
+
+        if (! file_exists($filePath)) {
+            throw new \UnexpectedValueException(sprintf('Game "%s" does not exist', $gameUuid));
+        }
+
+        return unserialize(file_get_contents($filePath));
+    };
+
+    $getToken = function () : PlayerToken {
 
     };
 
@@ -49,6 +62,8 @@ use Ramsey\Uuid\Uuid;
                     file_put_contents(__DIR__ . '/data/poker-games/' . (string) Uuid::uuid4(), serialize($game));
 
                     echo json_encode(['player-tokens' => array_map('strval', $playerTokens)]);
+
+                case 'post-blind':
             }
 
             break;
