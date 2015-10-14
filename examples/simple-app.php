@@ -92,6 +92,7 @@ use Ramsey\Uuid\Uuid;
                     $game = $getGame();
 
                     $game->postBlind($getToken(), (int) ($_GET['amount'] ?? 0));
+                    $saveGame($game);
 
                     echo json_encode(true);
 
@@ -102,6 +103,7 @@ use Ramsey\Uuid\Uuid;
                     $game = $getGame();
 
                     $game->fold($getToken());
+                    $saveGame($game);
 
                     echo json_encode(true);
 
@@ -111,6 +113,7 @@ use Ramsey\Uuid\Uuid;
                     $game = $getGame();
 
                     $game->call($getToken());
+                    $saveGame($game);
 
                     echo json_encode(true);
 
@@ -120,6 +123,7 @@ use Ramsey\Uuid\Uuid;
                     $game = $getGame();
 
                     $game->bet($getToken(), (int) ($_GET['amount'] ?? 0));
+                    $saveGame($game);
 
                     echo json_encode(true);
 
