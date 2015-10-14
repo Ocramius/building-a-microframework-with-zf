@@ -33,7 +33,7 @@ use Ramsey\Uuid\Uuid;
     };
 
     $getToken = function () : PlayerToken {
-
+        return PlayerToken::fromString($_GET['player_token'] ?? '');
     };
 
     switch (strtoupper($_SERVER['REQUEST_METHOD'])) {
