@@ -43,6 +43,18 @@ use Ramsey\Uuid\Uuid;
 
     switch (strtoupper($_SERVER['REQUEST_METHOD'])) {
         case 'GET':
+            switch ($_GET['action'] ?? null) {
+                case 'see-player-cards':
+                    /* @var $game Game */
+                    $game = $getGame();
+
+                    echo json_encode([
+                        // different serialization format needed.
+                        'player-cards' => $game->seePlayerCards($getToken()),
+                    ]);
+
+                    return;
+            }
             return;
         case 'POST':
             switch ($_GET['action'] ?? null) {
