@@ -69,7 +69,35 @@ use Ramsey\Uuid\Uuid;
                     /* @var $game Game */
                     $game = $getGame();
 
-                    $game->postBlind($getToken(), $_GET['amount'] ?? 0);
+                    $game->postBlind($getToken(), (int) ($_GET['amount'] ?? 0));
+
+                    echo json_encode(true);
+
+                    return;
+                case 'check':
+                case 'tap':
+                    /* @var $game Game */
+                    $game = $getGame();
+
+                    $game->fold($getToken());
+
+                    echo json_encode(true);
+
+                    return;
+                case 'call':
+                    /* @var $game Game */
+                    $game = $getGame();
+
+                    $game->call($getToken());
+
+                    echo json_encode(true);
+
+                    return;
+                case 'bet':
+                    /* @var $game Game */
+                    $game = $getGame();
+
+                    $game->bet($getToken(), (int) ($_GET['amount'] ?? 0));
 
                     echo json_encode(true);
 
