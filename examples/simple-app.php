@@ -38,7 +38,7 @@ use Ramsey\Uuid\Uuid;
         case 'POST':
             switch ($action) {
                 case 'create-game':
-                    // hardcoded
+                    // @TODO hardcoded (for now)
                     list($game, $playerTokens) = Game::fromPlayers(
                         Player::fromCash(100),
                         Player::fromCash(150),
