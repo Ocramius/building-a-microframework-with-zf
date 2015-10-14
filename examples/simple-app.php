@@ -20,7 +20,6 @@ use Ramsey\Uuid\Uuid;
     $playerToken = $_GET['player'] ?? null;
     $action      = $_GET['action'] ?? null;
     $amount      = $_GET['amount'] ?? null;
-    $httpMethod  = strtoupper($_SERVER['REQUEST_METHOD']);
 
     $getGame = function () : Game {
         $gameUuid = Uuid::fromString($_GET['game_id'] ?? '');
