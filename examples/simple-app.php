@@ -21,6 +21,9 @@ use Ramsey\Uuid\Uuid;
     $action      = $_GET['action'] ?? null;
     $amount      = $_GET['amount'] ?? null;
 
+    /**
+     * @return Game
+     */
     $getGame = function () : Game {
         $gameUuid = Uuid::fromString($_GET['game_id'] ?? '');
         $filePath = __DIR__ . '/data/poker-games/' . (string) $gameUuid;
@@ -66,7 +69,16 @@ use Ramsey\Uuid\Uuid;
                         'player-tokens' => array_map('strval', $playerTokens)
                     ]);
 
+                    return;
                 case 'post-blind':
+                    /* @var $game Game */
+                    $game = $getGame();
+
+                    $game->postBlind($getToken(), $_GET['amount'] ?? 0);
+
+                    echo json_encode(true);
+
+                    return;
             }
 
             return;
