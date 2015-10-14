@@ -82,7 +82,7 @@ final class Game
     /**
      * @param Player ...$players
      *
-     * @return self
+     * @return self[]|PlayerToken[] (ordered list)
      *
      * @throws \InvalidArgumentException
      */
@@ -105,7 +105,10 @@ final class Game
         // @todo assign player cards
         // @todo assign community cards
 
-        return $instance;
+        return [
+            $instance,
+            $instance->playerTokens,
+        ];
     }
 
     /**
