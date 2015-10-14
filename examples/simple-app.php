@@ -65,7 +65,8 @@ use Ramsey\Uuid\Uuid;
 
                     return;
             }
-            return;
+
+            break;
         case 'POST':
             switch ($_GET['action'] ?? null) {
                 case 'create-game':
@@ -130,6 +131,10 @@ use Ramsey\Uuid\Uuid;
                     return;
             }
 
-            return;
+            break;
     }
+
+    http_response_code(404);
+
+    echo json_encode(['error' => 'unknown action or http method']);
 })();
