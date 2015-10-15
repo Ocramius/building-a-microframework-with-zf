@@ -125,9 +125,9 @@ $app = \ZeffMu\App::init()
 /* @var $controllerPlugins \Zend\ServiceManager\AbstractPluginManager */
 $controllerPlugins = $app->getServiceManager()->get('ControllerPluginManager');
 
-$controllerPlugins->addInvokable('game', GameHelper::class);
-$controllerPlugins->addInvokable('playerToken', PlayerTokenHelper::class);
-$controllerPlugins->addInvokable('saveGame', PlayerTokenHelper::class);
-$controllerPlugins->addInvokable('amount', AmountHelper::class);
+$controllerPlugins->setInvokableClass('game', GameHelper::class);
+$controllerPlugins->setInvokableClass('playerToken', PlayerTokenHelper::class);
+$controllerPlugins->setInvokableClass('saveGame', PlayerTokenHelper::class);
+$controllerPlugins->setInvokableClass('amount', AmountHelper::class);
 
 $app->run();
