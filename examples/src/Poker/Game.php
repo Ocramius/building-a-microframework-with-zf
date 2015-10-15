@@ -139,13 +139,16 @@ final class Game
             throw new \BadMethodCallException('Player is not the current blind player');
         }
 
-        if (! $this->bets) {
-            $this->bets[] = Bet::fromPlayerAndCash($player, $amount);
-        } else {
-            $this->bet($playerToken, $amount);
+        if ($this->bets && $this->bets[0]->getAmount() > $amount) {
+            throw new \LogicException(sprintf(
+                'A previous bet of %s was made, a bet of %s was attempted, but is too low',
+                $previousAmount,
+                $amount
+            ));
         }
 
-        $this->stage = self::STAGE_BIG_BLIND;
+        $this->bets[] = Bet::fromPlayerAndCash($player, $amount);
+        $this->stage  = self::STAGE_BIG_BLIND;
 
         if (count($this->bets) >= 2) {
             $this->stage = self::STAGE_FOLD;
