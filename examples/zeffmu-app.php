@@ -36,7 +36,7 @@ final class PlayerTokenHelper extends AbstractPlugin
 {
     public function __invoke()
     {
-        return PlayerToken::fromString($this->controller->params('player_token', ''));
+        return PlayerToken::fromString($this->controller->params('playerToken', ''));
     }
 }
 
