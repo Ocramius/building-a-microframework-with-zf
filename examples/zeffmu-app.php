@@ -7,6 +7,7 @@ use Poker\Game;
 use Poker\Game\PlayerToken;
 use Ramsey\Uuid\Uuid;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Zend\View\Model\JsonModel;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -69,10 +70,10 @@ $app = \ZeffMu\App::init()
 
         $this->saveGame($game, $gameId);
 
-        return [
+        return new JsonModel([
             'game-id'       => $gameId,
             'player-tokens' => array_map('strval', $playerTokens)
-        ];
+        ]);
     })
     ->route('/post-blind/:gameId/:playerToken/:amount', function () {
         /* @var $game Game */
@@ -113,15 +114,16 @@ $app = \ZeffMu\App::init()
         /* @var $game Game */
         $game = $this->game();
 
-        return ['player-cards' => $game->seePlayerCards($this->playerToken())];
+        return new JsonModel(['player-cards' => $game->seePlayerCards($this->playerToken())]);
     })
     ->route('/see-community-cards/:gameId', function () {
         /* @var $game Game */
         $game = $this->game();
 
-        return ['player-cards' => $game->seeCommunityCards()];
+        return new JsonModel(['player-cards' => $game->seeCommunityCards()]);
     });
 
+// controller helpers setup
 /* @var $controllerPlugins \Zend\ServiceManager\AbstractPluginManager */
 $controllerPlugins = $app->getServiceManager()->get('ControllerPluginManager');
 
@@ -129,5 +131,12 @@ $controllerPlugins->setInvokableClass('game', GameHelper::class);
 $controllerPlugins->setInvokableClass('playerToken', PlayerTokenHelper::class);
 $controllerPlugins->setInvokableClass('saveGame', PlayerTokenHelper::class);
 $controllerPlugins->setInvokableClass('amount', AmountHelper::class);
+
+// cast "null" responses to a "success" response
+$app->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_DISPATCH, function (\Zend\Mvc\MvcEvent $event) {
+    if (null === $event->getResult()) {
+        $event->setResult(new JsonModel(['success' => true]));
+    }
+}, -1000);
 
 $app->run();
