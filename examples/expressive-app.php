@@ -10,9 +10,9 @@ use Zend\Expressive\AppFactory;
 use Zend\Http\Response;
 use Zend\View\Model\JsonModel;
 
-require_once __DIR__ . '/vendor/autoload.php';
-
 (function () {
+    require_once __DIR__ . '/vendor/autoload.php';
+
     $app = AppFactory::create();
 
     $uuidRegex          = '[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}';
