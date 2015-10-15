@@ -248,7 +248,6 @@ final class Game
         $this->bets[] = Bet::fromPlayerAndCash($player, $amount);
 
         $this->check($playerToken);
-
     }
 
     public function check(PlayerToken $playerToken)
@@ -344,10 +343,13 @@ final class Game
      */
     private function getPlayersRequiredToAction()
     {
-        return array_diff(
+        return array_udiff(
             $this->players,
             $this->foldedPlayers,
-            $this->checkedPlayers
+            $this->checkedPlayers,
+            function (Player $player1, Player $player2) {
+                return (int) ($player1 !== $player2);
+            }
         );
     }
 
