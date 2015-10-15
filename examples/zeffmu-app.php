@@ -109,17 +109,17 @@ $app = \ZeffMu\App::init()
         $game->bet($this->playerToken(), $this->amount());
         $this->saveGame($game);
     })
-    ->route('see-player-cards/:gameId/:playerToken', function () {
+    ->route('/see-player-cards/:gameId/:playerToken', function () {
         /* @var $game Game */
         $game = $this->game();
 
         return ['player-cards' => $game->seePlayerCards($this->playerToken())];
     })
-    ->route('see-community-cards/:gameId', function () {
+    ->route('/see-community-cards/:gameId', function () {
         /* @var $game Game */
         $game = $this->game();
 
-        return ['player-cards' => $game->seePlayerCards($this->playerToken())];
+        return ['player-cards' => $game->seeCommunityCards()];
     });
 
 /* @var $controllerPlugins \Zend\ServiceManager\AbstractPluginManager */
