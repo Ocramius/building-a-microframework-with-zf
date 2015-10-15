@@ -13,7 +13,9 @@ use Ramsey\Uuid\Uuid;
     set_error_handler(function () {
         http_response_code(500);
 
-        json_encode(['error' => 'something went wrong']);
+        echo json_encode(['error' => 'something went wrong']);
+
+        exit(1);
     });
 
     /**
