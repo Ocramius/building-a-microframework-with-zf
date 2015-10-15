@@ -135,12 +135,12 @@ $controllerPlugins->setInvokableClass('playerToken', PlayerTokenHelper::class);
 $controllerPlugins->setInvokableClass('saveGame', PlayerTokenHelper::class);
 $controllerPlugins->setInvokableClass('amount', AmountHelper::class);
 
-// cast "null" responses to a "success" response
-$app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, function (MvcEvent $event) {
-    if (null === $event->getResult()) {
-        $event->setResult(new JsonModel(['success' => true]));
-    }
-}, -1000);
+// cast "null" responses to a "success" response (doesn't work, due to a ZeffMu bug)
+//$app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, function (MvcEvent $event) {
+//    if (null === $event->getResult()) {
+//        $event->setResult(new JsonModel(['success' => true]));
+//    }
+//}, 10);
 
 $app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, function (MvcEvent $event) {
     $exception = $event->getParam('exception');
