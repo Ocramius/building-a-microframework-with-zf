@@ -124,9 +124,10 @@ $app = \ZeffMu\App::init()
         return new JsonModel(['player-cards' => $game->seeCommunityCards()]);
     });
 
+$serviceManager = $app->getServiceManager();
 // controller helpers setup
 /* @var $controllerPlugins \Zend\ServiceManager\AbstractPluginManager */
-$controllerPlugins = $app->getServiceManager()->get('ControllerPluginManager');
+$controllerPlugins = $serviceManager->get('ControllerPluginManager');
 
 $controllerPlugins->setInvokableClass('game', GameHelper::class);
 $controllerPlugins->setInvokableClass('playerToken', PlayerTokenHelper::class);
@@ -139,5 +140,10 @@ $app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, function (MvcEvent $ev
         $event->setResult(new JsonModel(['success' => true]));
     }
 }, -1000);
+
+/* @var $viewManager \Zend\Mvc\View\Http\ViewManager */
+$viewManager = $serviceManager->get('ViewManager');
+
+$viewManager->getView()->getEventManager()->attach($serviceManager->get('ViewJsonStrategy'), 100);
 
 $app->run();
