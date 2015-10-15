@@ -1,7 +1,10 @@
 {
     "require": {
         "ramsey/uuid": "^3.0",
-        "binarykitten/zeffmu": "^0.1.1"
+        "binarykitten/zeffmu": "^0.1.1",
+        "zendframework/zend-expressive": "^0.5.1",
+        "zendframework/zend-expressive-fastroute": "^0.1.2",
+        "zendframework/zend-servicemanager": "^2.6"
     },
     "autoload": {
         "psr-4": {
