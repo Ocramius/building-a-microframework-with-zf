@@ -18,7 +18,7 @@ require_once __DIR__ . '/vendor/autoload.php';
     $uuidRegex          = '[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}';
     $gameIdOptions      = ['gameId' => $uuidRegex];
     $playerTokenOptions = ['playerToken' => $uuidRegex];
-    $amountOptions      = ['amount' => $uuidRegex];
+    $amountOptions      = ['amount' => '[1-9]\d*'];
     // 5357280a-6542-4b25-a560-e8db4f995407
 
     $app->post('/create-game', function () {
