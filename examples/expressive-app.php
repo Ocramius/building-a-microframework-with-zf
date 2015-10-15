@@ -5,6 +5,7 @@
 use Poker\Game\Player;
 use Poker\Game;
 use Poker\Game\PlayerToken;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Ramsey\Uuid\Uuid;
 use Zend\Expressive\AppFactory;
 use Zend\Http\Response;
@@ -19,7 +20,29 @@ use Zend\View\Model\JsonModel;
     $gameIdOptions      = ['gameId' => $uuidRegex];
     $playerTokenOptions = ['playerToken' => $uuidRegex];
     $amountOptions      = ['amount' => '[1-9]\d*'];
-    // 5357280a-6542-4b25-a560-e8db4f995407
+
+    // Note: we are not doing any particular DI here, because we want to keep it minimal.
+    $getGame = function (Request $request) : Game {
+        $gameUuid = Uuid::fromString($request->getAttribute('gameId'));
+        $filePath = __DIR__ . '/data/poker-games/' . (string) $gameUuid;
+
+        if (! file_exists($filePath)) {
+            throw new \UnexpectedValueException(sprintf('Game "%s" does not exist', $gameUuid));
+        }
+
+        return unserialize(file_get_contents($filePath));
+    };
+
+    $saveGame = function (Request $request, Game $game, Uuid $gameId = null) {
+        file_put_contents(
+            __DIR__ . '/data/poker-games/' . (string) ($gameId ?? Uuid::fromString($request->getAttribute('gameId'))),
+            serialize($game)
+        );
+    };
+
+    $getToken = function (Request $request) : PlayerToken {
+        return PlayerToken::fromString($request->getAttribute('playerToken'));
+    };
 
     $app->post('/create-game', function () {
         list($game, $playerTokens) = Game::fromPlayers(
@@ -40,68 +63,77 @@ use Zend\View\Model\JsonModel;
     });
 
     $app
-        ->post('/post-blind/{gameId}/{playerToken}/{amount}', function () {
-            /* @var $game Game */
-            $game = $this->game();
+        ->post(
+            '/post-blind/{gameId}/{playerToken}/{amount}',
+            function (Request $request) use ($getGame, $getToken, $saveGame) {
+                /* @var $game Game */
+                $game = $getGame($request);
 
-            $game->postBlind($this->playerToken(), $this->amount());
-            $this->saveGame($game);
-        })
+                $game->postBlind($getToken($request), (int) $request->getAttribute('amount'));
+                $saveGame($game);
+            }
+        )
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions, $amountOptions)]);
 
     $app
-        ->post('/check/{gameId}/{playerToken}', function () {
+        ->post('/check/{gameId}/{playerToken}', function (Request $request) use ($getGame, $getToken, $saveGame) {
             /* @var $game Game */
-            $game = $this->game();
+            $game = $getGame($request);
 
-            $game->check($this->playerToken());
-            $this->saveGame($game);
+            $game->check($getToken($request));
+            $saveGame($game);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
     $app
-        ->post('/tap/{gameId}/{playerToken}', function () {
+        ->post('/tap/{gameId}/{playerToken}', function (Request $request) use ($getGame, $getToken, $saveGame) {
             /* @var $game Game */
-            $game = $this->game();
+            $game = $getGame($request);
 
-            $game->tap($this->playerToken());
-            $this->saveGame($game);
+            $game->tap($getToken($request));
+            $saveGame($game);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
     $app
-        ->post('/call/{gameId}/{playerToken}', function () {
+        ->post('/call/{gameId}/{playerToken}', function (Request $request) use ($getGame, $getToken, $saveGame) {
             /* @var $game Game */
-            $game = $this->game();
+            $game = $getGame($request);
 
-            $game->call($this->playerToken());
-            $this->saveGame($game);
+            $game->call($getToken($request));
+            $saveGame($game);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
     $app
-        ->post('/bet/{gameId}/{playerToken}/{amount}', function () {
-            /* @var $game Game */
-            $game = $this->game();
+        ->post(
+            '/bet/{gameId}/{playerToken}/{amount}',
+            function (Request $request) use ($getGame, $getToken, $saveGame) {
+                /* @var $game Game */
+                $game = $getGame($request);
 
-            $game->bet($this->playerToken(), $this->amount());
-            $this->saveGame($game);
-        })
+                $game->bet($getToken($request), (int) $request->getAttribute('amount'));
+                $saveGame($game);
+            }
+        )
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions, $amountOptions)]);
 
     $app
-        ->get('/see-player-cards/{gameId}/{playerToken}', function () {
-            /* @var $game Game */
-            $game = $this->game();
+        ->get(
+            '/see-player-cards/{gameId}/{playerToken}',
+            function (Request $request) use ($getGame, $getToken, $saveGame) {
+                /* @var $game Game */
+                $game = $getGame($request);
 
-            return new JsonModel(['player-cards' => $game->seePlayerCards($this->playerToken())]);
-        })
+                return new JsonModel(['player-cards' => $game->seePlayerCards($getToken($request))]);
+            }
+        )
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
     $app
-        ->get('/see-community-cards/{gameId}', function () {
+        ->get('/see-community-cards/{gameId}', function (Request $request) use ($getGame, $saveGame) {
             /* @var $game Game */
-            $game = $this->game();
+            $game = $getGame($request);
 
             return new JsonModel(['player-cards' => $game->seeCommunityCards()]);
         })
