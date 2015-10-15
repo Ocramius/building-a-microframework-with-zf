@@ -107,7 +107,7 @@ final class Game
 
         return [
             $instance,
-            $instance->playerTokens,
+            array_map([PlayerToken::class, 'fromString'], array_keys($instance->playerTokens)),
         ];
     }
 
