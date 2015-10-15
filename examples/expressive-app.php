@@ -7,9 +7,9 @@ use Poker\Game;
 use Poker\Game\PlayerToken;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Ramsey\Uuid\Uuid;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\AppFactory;
 use Zend\Http\Response;
-use Zend\View\Model\JsonModel;
 
 (function () {
     require_once __DIR__ . '/vendor/autoload.php';
@@ -56,7 +56,7 @@ use Zend\View\Model\JsonModel;
 
         $this->saveGame($game, $gameId);
 
-        return new JsonModel([
+        return new JsonResponse([
             'game-id'       => (string) $gameId,
             'player-tokens' => array_map('strval', $playerTokens)
         ]);
@@ -71,6 +71,8 @@ use Zend\View\Model\JsonModel;
 
                 $game->postBlind($getToken($request), (int) $request->getAttribute('amount'));
                 $saveGame($game);
+
+                return new JsonResponse(true);
             }
         )
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions, $amountOptions)]);
@@ -82,6 +84,8 @@ use Zend\View\Model\JsonModel;
 
             $game->check($getToken($request));
             $saveGame($game);
+
+            return new JsonResponse(true);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
@@ -92,6 +96,8 @@ use Zend\View\Model\JsonModel;
 
             $game->tap($getToken($request));
             $saveGame($game);
+
+            return new JsonResponse(true);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
@@ -102,6 +108,8 @@ use Zend\View\Model\JsonModel;
 
             $game->call($getToken($request));
             $saveGame($game);
+
+            return new JsonResponse(true);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
 
@@ -114,6 +122,8 @@ use Zend\View\Model\JsonModel;
 
                 $game->bet($getToken($request), (int) $request->getAttribute('amount'));
                 $saveGame($game);
+
+                return new JsonResponse(true);
             }
         )
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions, $amountOptions)]);
@@ -125,7 +135,7 @@ use Zend\View\Model\JsonModel;
                 /* @var $game Game */
                 $game = $getGame($request);
 
-                return new JsonModel(['player-cards' => $game->seePlayerCards($getToken($request))]);
+                return new JsonResponse(['player-cards' => $game->seePlayerCards($getToken($request))]);
             }
         )
         ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
@@ -135,7 +145,7 @@ use Zend\View\Model\JsonModel;
             /* @var $game Game */
             $game = $getGame($request);
 
-            return new JsonModel(['player-cards' => $game->seeCommunityCards()]);
+            return new JsonResponse(['player-cards' => $game->seeCommunityCards()]);
         })
         ->setOptions(['tokens' => array_merge($gameIdOptions)]);
 
