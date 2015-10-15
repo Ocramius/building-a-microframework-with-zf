@@ -17,9 +17,9 @@ use Zend\Http\Response;
     $app = AppFactory::create();
 
     $uuidRegex          = '[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}';
-    $gameIdOptions      = ['gameId' => $uuidRegex];
-    $playerTokenOptions = ['playerToken' => $uuidRegex];
-    $amountOptions      = ['amount' => '[1-9]\d*'];
+    $gameIdParam        = '{gameId:' . $uuidRegex . '}';
+    $playerTokenParam   = '{playerToken:' . $uuidRegex . '}';
+    $amountParam        = '{amount:[1-9]\d*}';
 
     // Note: we are not doing any particular DI here, because we want to keep it minimal.
     $getGame = function (Request $request) : Game {
@@ -64,7 +64,7 @@ use Zend\Http\Response;
 
     $app
         ->post(
-            '/post-blind/{gameId}/{playerToken}/{amount}',
+            '/post-blind/' . $gameIdParam . '/' . $playerTokenParam . '/' . $amountParam,
             function (Request $request) use ($getGame, $getToken, $saveGame) {
                 /* @var $game Game */
                 $game = $getGame($request);
@@ -74,48 +74,53 @@ use Zend\Http\Response;
 
                 return new JsonResponse(true);
             }
-        )
-        ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions, $amountOptions)]);
-
-    $app
-        ->post('/check/{gameId}/{playerToken}', function (Request $request) use ($getGame, $getToken, $saveGame) {
-            /* @var $game Game */
-            $game = $getGame($request);
-
-            $game->check($getToken($request));
-            $saveGame($game);
-
-            return new JsonResponse(true);
-        })
-        ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
-
-    $app
-        ->post('/tap/{gameId}/{playerToken}', function (Request $request) use ($getGame, $getToken, $saveGame) {
-            /* @var $game Game */
-            $game = $getGame($request);
-
-            $game->tap($getToken($request));
-            $saveGame($game);
-
-            return new JsonResponse(true);
-        })
-        ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
-
-    $app
-        ->post('/call/{gameId}/{playerToken}', function (Request $request) use ($getGame, $getToken, $saveGame) {
-            /* @var $game Game */
-            $game = $getGame($request);
-
-            $game->call($getToken($request));
-            $saveGame($game);
-
-            return new JsonResponse(true);
-        })
-        ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
+        );
 
     $app
         ->post(
-            '/bet/{gameId}/{playerToken}/{amount}',
+            '/check/' . $gameIdParam . '/' . $playerTokenParam,
+            function (Request $request) use ($getGame, $getToken, $saveGame) {
+                /* @var $game Game */
+                $game = $getGame($request);
+
+                $game->check($getToken($request));
+                $saveGame($game);
+
+                return new JsonResponse(true);
+            }
+        );
+
+    $app
+        ->post(
+            '/tap/' . $gameIdParam . '/' . $playerTokenParam,
+            function (Request $request) use ($getGame, $getToken, $saveGame) {
+                /* @var $game Game */
+                $game = $getGame($request);
+
+                $game->tap($getToken($request));
+                $saveGame($game);
+
+                return new JsonResponse(true);
+            }
+        );
+
+    $app
+        ->post(
+            '/call/' . $gameIdParam . '/' . $playerTokenParam,
+            function (Request $request) use ($getGame, $getToken, $saveGame) {
+                /* @var $game Game */
+                $game = $getGame($request);
+
+                $game->call($getToken($request));
+                $saveGame($game);
+
+                return new JsonResponse(true);
+            }
+        );
+
+    $app
+        ->post(
+            '/bet/' . $gameIdParam . '/' . $playerTokenParam . '/' . $amountParam,
             function (Request $request) use ($getGame, $getToken, $saveGame) {
                 /* @var $game Game */
                 $game = $getGame($request);
@@ -125,29 +130,26 @@ use Zend\Http\Response;
 
                 return new JsonResponse(true);
             }
-        )
-        ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions, $amountOptions)]);
+        );
 
     $app
         ->get(
-            '/see-player-cards/{gameId}/{playerToken}',
+            '/see-player-cards/' . $gameIdParam . '/' . $playerTokenParam,
             function (Request $request) use ($getGame, $getToken, $saveGame) {
                 /* @var $game Game */
                 $game = $getGame($request);
 
                 return new JsonResponse(['player-cards' => $game->seePlayerCards($getToken($request))]);
             }
-        )
-        ->setOptions(['tokens' => array_merge($gameIdOptions, $playerTokenOptions)]);
+        );
 
     $app
-        ->get('/see-community-cards/{gameId}', function (Request $request) use ($getGame, $saveGame) {
+        ->get('/see-community-cards/' . $gameIdParam, function (Request $request) use ($getGame, $saveGame) {
             /* @var $game Game */
             $game = $getGame($request);
 
             return new JsonResponse(['player-cards' => $game->seeCommunityCards()]);
-        })
-        ->setOptions(['tokens' => array_merge($gameIdOptions)]);
+        });
 
     $app->run();
 })();
