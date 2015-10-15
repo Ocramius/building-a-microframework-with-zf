@@ -6,6 +6,7 @@ use Poker\Game\Player;
 use Poker\Game;
 use Poker\Game\PlayerToken;
 use Ramsey\Uuid\Uuid;
+use Zend\Http\Response;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
@@ -140,6 +141,20 @@ $app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, function (MvcEvent $ev
         $event->setResult(new JsonModel(['success' => true]));
     }
 }, -1000);
+
+$app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH_ERROR, function (MvcEvent $event) {
+    $exception = $event->getParam('exception');
+
+    if ($exception instanceof \Exception) {
+        $response = new Response();
+
+        $response->setStatusCode(Response::STATUS_CODE_500);
+        $response->setContent(json_encode(['error' => $exception->getMessage()]));
+
+        $event->setResult($response);
+        $event->stopPropagation();
+    }
+}, 1000);
 
 /* @var $viewManager \Zend\Mvc\View\Http\ViewManager */
 $viewManager = $serviceManager->get('ViewManager');
