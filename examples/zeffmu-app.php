@@ -7,6 +7,7 @@ use Poker\Game;
 use Poker\Game\PlayerToken;
 use Ramsey\Uuid\Uuid;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+use Zend\Mvc\MvcEvent;
 use Zend\View\Model\JsonModel;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -133,7 +134,7 @@ $controllerPlugins->setInvokableClass('saveGame', PlayerTokenHelper::class);
 $controllerPlugins->setInvokableClass('amount', AmountHelper::class);
 
 // cast "null" responses to a "success" response
-$app->getEventManager()->attach(\Zend\Mvc\MvcEvent::EVENT_DISPATCH, function (\Zend\Mvc\MvcEvent $event) {
+$app->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, function (MvcEvent $event) {
     if (null === $event->getResult()) {
         $event->setResult(new JsonModel(['success' => true]));
     }
