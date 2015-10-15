@@ -1,6 +1,7 @@
 {
     "require": {
-        "ramsey/uuid": "^3.0"
+        "ramsey/uuid": "^3.0",
+        "binarykitten/zeffmu": "^0.1.1"
     },
     "autoload": {
         "psr-4": {
