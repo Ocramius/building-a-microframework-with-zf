@@ -68,12 +68,12 @@ $app = \ZeffMu\App::init()
             Player::fromCash(95)
         );
 
-        $gameId = (string) Uuid::uuid4();
+        $gameId = Uuid::uuid4();
 
         $this->saveGame($game, $gameId);
 
         return new JsonModel([
-            'game-id'       => $gameId,
+            'game-id'       => (string) $gameId,
             'player-tokens' => array_map('strval', $playerTokens)
         ]);
     })
