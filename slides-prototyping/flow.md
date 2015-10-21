@@ -27,9 +27,6 @@
     - silex
     - penny
     - lumen
-    - react/http
-    - phly/http
-    - phly/conduit
     - zendframework/zend-expressive
     - slim
 
