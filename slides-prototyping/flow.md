@@ -80,6 +80,8 @@
           - integration with firewall components
           - etc.
           
+# moving to ZF2
+          
  - let's make our code more forward-compliant
     - let's introduce zf2
     - with zf2 comes the entire module system
