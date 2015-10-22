@@ -10,8 +10,8 @@
     "introduction/i-work-on-zend-framework-2.html",
     "introduction/i-work-on-doctrine.html",
 
-    "building-a-micro-framework-with-zf/intro/building-a-micro-framework-with-zf.html",
-    "building-a-micro-framework-with-zf/intro/why-zf-and-not-zf3.html",
+    "building-a-microframework-with-zf/intro/building-a-microframework-with-zf.html",
+    "building-a-microframework-with-zf/intro/why-zf-and-not-zf3.html",
 
     "outro/thanks.html"
 ]
