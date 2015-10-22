@@ -80,6 +80,12 @@
           - integration with firewall components
           - etc.
           
+ - let's make our code more forward-compliant
+    - let's introduce zf2
+    - with zf2 comes the entire module system
+    - we split "actions" into functions
+    - we get request/response object support
+          
  - introducing PSR-7 middlewares
     - what is PSR-7? (ask the audience)
     - let's make our app forward-compatible!
