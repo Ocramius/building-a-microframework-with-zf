@@ -87,6 +87,8 @@
     - with zf2 comes the entire module system
     - we split "actions" into functions
     - we get request/response object support
+    
+# moving forward (ZF3?)
           
  - introducing PSR-7 middlewares
     - what is PSR-7? (ask the audience)
