@@ -87,6 +87,12 @@
     - with zf2 comes the entire module system
     - we split "actions" into functions
     - we get request/response object support
+    - we add helpers as services
+    - we have error handling
+    - we can import modules that solve ACL for us
+    - we can import modules that solve CORS for us
+    - we can have templating
+    - etcetera
     
 # moving forward (ZF3?)
           
