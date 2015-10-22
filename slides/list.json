@@ -23,8 +23,10 @@
 
     "building-a-microframework-with-zf/poker/poker-phases.html",
     "building-a-microframework-with-zf/poker/poker-actions.html",
+    "building-a-microframework-with-zf/poker/demo-time.html",
 
     "building-a-microframework-with-zf/building-our-first-app/our-first-app.html",
+    "building-a-microframework-with-zf/building-our-first-app/demo-time.html",
 
     "outro/thanks.html"
 ]
